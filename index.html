@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Paul Hagler — AI Systems & Automation</title>
+  <meta name="description" content="Practical AI and automation for small businesses. Paul Hagler helps simplify operations, reduce repetitive work, and build systems people actually use.">
+  <meta name="theme-color" content="#070a08">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%23070a08%22/%3E%3Cpath d=%22M13 32c7-11 14-16 19-16s12 5 19 16c-7 11-14 16-19 16S20 43 13 32Z%22 fill=%22none%22 stroke=%22%23eee9dd%22 stroke-width=%223%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%227%22 fill=%22%2391b991%22/%3E%3C/svg%3E" type="image/svg+xml">
+  <style>
+
+:root{
+  --bg:#070a08;
+  --panel:#0b0f0c;
+  --bone:#eee9dd;
+  --muted:#aaa69b;
+  --green:#91b991;
+  --green2:#b3d6ad;
+  --line:rgba(238,233,221,.13);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--bone);
+  font-family:Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(111,159,112,.075),transparent 25%),
+    linear-gradient(rgba(255,255,255,.011) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.011) 1px,transparent 1px);
+  background-size:auto,54px 54px,54px 54px;
+}
+a{color:inherit}
+.wrap{width:min(1180px,92vw);margin-inline:auto}
+.topbar{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:18px 4vw;border-bottom:1px solid var(--line);
+  background:rgba(7,10,8,.88);backdrop-filter:blur(14px);
+}
+.brand{text-decoration:none;display:grid;gap:3px}
+.brand strong,.brand span,.topbar nav a,.eyebrow,.section-label,.case-kicker,
+.case-side span,.proof-note,.price-block span,.location,footer,.signal span{
+  font-family:"Courier New",monospace;letter-spacing:.16em
+}
+.brand strong{font-size:12px;font-weight:700}
+.brand span{font-size:9px;color:var(--green)}
+.topbar nav{display:flex;gap:22px}
+.topbar nav a{font-size:10px;text-decoration:none;color:#b9b5ac}
+.topbar nav a:hover{color:var(--green2)}
+.hero{
+  min-height:86vh;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  align-items:center;gap:4vw;padding:9vh 0 8vh;
+}
+.eyebrow{font-size:10px;color:var(--green);margin:0 0 18px}
+h1{
+  margin:0;font-weight:400;font-size:clamp(62px,9.2vw,124px);
+  line-height:.84;letter-spacing:-.058em;
+}
+h1 em{font-style:normal;color:var(--green2)}
+.lede{
+  max-width:760px;margin:30px 0 0;
+  color:#d1ccc1;font-size:clamp(20px,2vw,28px);line-height:1.45;
+}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.button{
+  display:inline-block;text-decoration:none;padding:14px 17px;
+  border:1px solid var(--line);
+  font:10px "Courier New",monospace;letter-spacing:.14em;
+}
+.button.primary{background:var(--green2);color:#081009;border-color:var(--green2)}
+.button.ghost:hover{border-color:rgba(179,214,173,.55);color:var(--green2)}
+.signal{justify-self:end;width:min(390px,100%);opacity:.94}
+.signal svg{display:block;width:100%;height:auto}
+.signal .faint,.signal .line,.signal .tick,.signal .wave{fill:none;stroke:var(--green);vector-effect:non-scaling-stroke}
+.signal .faint{opacity:.14;stroke-width:1}
+.signal .line{opacity:.72;stroke-width:1.2}
+.signal .thin{opacity:.33}
+.signal .tick{opacity:.32;stroke-width:1}
+.signal .wave{opacity:.18;stroke-width:1}
+.signal .pulse{fill:none;stroke:var(--green2);stroke-width:1.2}
+.signal .core{fill:var(--green2)}
+.signal span{display:block;text-align:center;margin-top:-18px;font-size:9px;color:#667869}
+.strip{border-block:1px solid var(--line);background:#090d0a}
+.strip-inner{display:grid;grid-template-columns:repeat(4,1fr)}
+.strip span{
+  padding:15px 12px;border-right:1px solid var(--line);
+  text-align:center;font:9px "Courier New",monospace;letter-spacing:.14em;color:#898d85
+}
+.strip span:last-child{border-right:0}
+.section{
+  display:grid;grid-template-columns:170px minmax(0,1fr);gap:42px;
+  padding:110px 0;border-bottom:1px solid var(--line)
+}
+.section-label{font-size:10px;color:#68786a;padding-top:8px}
+.section-body>h2,.audit h2,.contact h2{
+  margin:0;font-size:clamp(44px,6vw,78px);line-height:.95;font-weight:400;letter-spacing:-.04em
+}
+.intro{
+  max-width:850px;color:#cbc5b9;font-size:20px;line-height:1.65;margin:25px 0 0
+}
+.rows{margin-top:48px;border-top:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:70px 1fr;gap:22px;
+  padding:28px 0;border-bottom:1px solid var(--line)
+}
+.row>b{font:10px "Courier New",monospace;color:var(--green)}
+.row h3{margin:0 0 7px;font-size:25px;font-weight:400}
+.row p{margin:0;color:#9f9b92;max-width:760px;font-size:16px;line-height:1.55}
+.case{
+  display:grid;grid-template-columns:55px minmax(0,1fr) 190px;gap:28px;
+  padding:38px 0;border-top:1px solid var(--line)
+}
+.case:first-of-type{margin-top:48px}
+.case-number{font:11px "Courier New",monospace;color:var(--green);padding-top:4px}
+.case-kicker{font-size:9px;color:#747e74}
+.case-main h3{font-size:34px;font-weight:400;margin:13px 0 13px;letter-spacing:-.02em}
+.case-main p{margin:0;color:#aaa59b;font-size:17px;line-height:1.6;max-width:750px}
+.case-side{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.case-side span{font-size:8px;border:1px solid var(--line);padding:7px 8px;color:#879187}
+.proof-note{font-size:9px;color:#72736d;margin-top:24px}
+.audit{
+  border:1px solid rgba(145,185,145,.42);
+  padding:clamp(28px,5vw,58px);
+  display:grid;grid-template-columns:1.3fr .7fr;gap:34px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(145,185,145,.09),transparent 30%),
+    #090d0a;
+}
+.audit>ul{grid-column:1/2;margin:6px 0 0;padding-left:20px;color:#bcb7ac}
+.audit li{padding:8px 0;line-height:1.45}
+.price-block{align-self:start;text-align:right}
+.price{font-size:clamp(62px,7vw,92px);line-height:.9;color:var(--green2)}
+.price-block span{font-size:9px;color:#7f8f80}
+.audit-end{
+  grid-column:1/-1;border-top:1px solid var(--line);padding-top:25px;
+  display:flex;justify-content:space-between;align-items:center;gap:30px
+}
+.audit-end p{margin:0;color:#858078;font-size:13px;line-height:1.5;max-width:650px}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:70px}
+.about-side{padding-top:7px}
+.about-side p{margin:0 0 22px;color:#aaa59c;font-size:17px;line-height:1.7}
+.contact{padding:130px 0 120px}
+.contact h2{font-size:clamp(58px,9vw,116px)}
+.contact>p:not(.eyebrow){max-width:720px;font-size:21px;line-height:1.55;color:#aaa59d;margin:30px 0}
+.email{
+  display:inline-block;margin-top:14px;text-decoration:none;
+  font-size:clamp(19px,2.4vw,31px);color:var(--green2);
+  border-bottom:1px solid rgba(179,214,173,.35);padding-bottom:5px
+}
+.location{font-size:9px;color:#777c75;margin-top:35px}
+footer{
+  border-top:1px solid var(--line);padding:22px 4vw;
+  display:flex;justify-content:space-between;gap:20px;
+  font-size:8px;color:#666b65
+}
+a:focus-visible{outline:2px solid var(--green2);outline-offset:4px}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding:13vh 0 9vh}
+  .signal{width:270px;justify-self:start;margin-top:10px;opacity:.72}
+  .strip-inner{grid-template-columns:1fr 1fr}
+  .strip span:nth-child(2){border-right:0}
+  .strip span:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .section{grid-template-columns:1fr;gap:20px;padding:82px 0}
+  .section-label{padding:0}
+  .case{grid-template-columns:40px 1fr}
+  .case-side{grid-column:2;flex-direction:row;flex-wrap:wrap}
+  .about-grid{grid-template-columns:1fr;gap:28px}
+}
+@media(max-width:650px){
+  .topbar{padding:15px 4vw}
+  .brand span{display:none}
+  .topbar nav{gap:11px}
+  .topbar nav a{font-size:8px}
+  h1{font-size:clamp(55px,18vw,88px)}
+  .lede{font-size:19px}
+  .signal{width:210px}
+  .row{grid-template-columns:38px 1fr}
+  .case{grid-template-columns:1fr}
+  .case-number{display:none}
+  .case-side{grid-column:1}
+  .audit{grid-template-columns:1fr}
+  .price-block{text-align:left}
+  .audit>ul,.audit-end{grid-column:1}
+  .audit-end{align-items:flex-start;flex-direction:column}
+  footer{flex-direction:column}
+}
+
+</style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"Paul Hagler — AI Systems & Automation",
+    "areaServed":"United States",
+    "address":{"@type":"PostalAddress","addressLocality":"Kansas City","addressRegion":"MO","addressCountry":"US"},
+    "email":"mailto:paulallenhagler@gmail.com",
+    "description":"Practical AI and automation consulting for small businesses."
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <strong>PAUL HAGLER</strong>
+      <span>AI SYSTEMS & AUTOMATION</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#work">WORK</a>
+      <a href="#audit">AUDIT</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">AI · AUTOMATION · OPERATIONS</p>
+        <h1>Real problems.<br>Practical AI.<br><em>Actual results.</em></h1>
+        <p class="lede">I help small businesses simplify operations, automate repetitive work, and turn the tools they already use into systems that actually help.</p>
+        <div class="actions">
+          <a class="button primary" href="mailto:paulallenhagler@gmail.com?subject=AI%20Operations%20Audit">START WITH AN AUDIT</a>
+          <a class="button ghost" href="#work">SEE THE WORK ↓</a>
+        </div>
+      </div>
+
+      <div class="signal" aria-hidden="true">
+        <svg viewBox="0 0 460 560" role="img">
+          <path class="faint" d="M230 34 366 112 366 270 230 526 94 270 94 112Z"/>
+          <path class="line" d="M230 74 328 130 328 256 230 448 132 256 132 130Z"/>
+          <path class="line thin" d="M230 118 292 154 292 241 230 362 168 241 168 154Z"/>
+          <circle class="pulse" cx="230" cy="222" r="27"/>
+          <circle class="core" cx="230" cy="222" r="6"/>
+          <path class="tick" d="M230 34v40M230 448v78M94 270h74M292 270h74"/>
+          <path class="wave" d="M117 321c38-23 72-23 113 0s75 23 113 0"/>
+        </svg>
+        <span>OPERATIONS / SIGNAL / SYSTEM</span>
+      </div>
+    </section>
+
+    <section class="strip">
+      <div class="wrap strip-inner">
+        <span>LESS RETYPING</span>
+        <span>FEWER DROPPED HANDOFFS</span>
+        <span>CLEARER INFORMATION</span>
+        <span>HUMAN REVIEW WHERE IT MATTERS</span>
+      </div>
+    </section>
+
+    <section class="section wrap" id="approach">
+      <div class="section-label">01 / WHAT I DO</div>
+      <div class="section-body">
+        <h2>Fix the work that keeps landing back on your plate.</h2>
+        <p class="intro">The starting point is not “where can we add AI?” It is the work itself: what gets retyped, forgotten, chased down, copied between systems, or rebuilt every week.</p>
+        <div class="rows">
+          <div class="row">
+            <b>01</b>
+            <div><h3>Find the friction.</h3><p>Map the recurring work, information gaps, handoffs, and bottlenecks that cost time every week.</p></div>
+          </div>
+          <div class="row">
+            <b>02</b>
+            <div><h3>Connect the information.</h3><p>Bring scattered customer records, documents, orders, spreadsheets, and communication into a clearer operating picture.</p></div>
+          </div>
+          <div class="row">
+            <b>03</b>
+            <div><h3>Automate what should be routine.</h3><p>Use AI and automation where they actually help, while keeping people in control of decisions that require judgment.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="work">
+      <div class="section-label">02 / SELECTED WORK</div>
+      <div class="section-body">
+        <h2>Built from inside real operations.</h2>
+        <p class="intro">The work below came from businesses with real customers, real handoffs, and real daily pressure—not demo problems invented for a portfolio.</p>
+
+        <article class="case">
+          <div class="case-number">A</div>
+          <div class="case-main">
+            <div class="case-kicker">LONGBOARDS · CATERING OPERATIONS</div>
+            <h3>Catering operations control center</h3>
+            <p>Customer history, catering orders, invoice context, reconciliation, follow-up, and multi-location information brought into a single working system.</p>
+          </div>
+          <div class="case-side">
+            <span>OPERATIONS</span><span>DATA NORMALIZATION</span><span>WORKFLOW</span><span>AI ASSISTANCE</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="case-number">B</div>
+          <div class="case-main">
+            <div class="case-kicker">EQUIP-BID · AUCTION WORKFLOW</div>
+            <h3>AI-assisted appraisal workflow</h3>
+            <p>An appraisal and research concept built from hands-on auction experience to help structure item research, comparison, and valuation support.</p>
+          </div>
+          <div class="case-side">
+            <span>RESEARCH</span><span>APPRAISAL</span><span>AI WORKFLOW</span><span>HUMAN REVIEW</span>
+          </div>
+        </article>
+
+        <article class="case">
+          <div class="case-number">C</div>
+          <div class="case-main">
+            <div class="case-kicker">MONARCH LIQUIDATION · BUSINESS AUTOMATION</div>
+            <h3>Practical automation for recurring admin</h3>
+            <p>Systems around customer communication, project coordination, repetitive administrative work, and information that otherwise has to be reconstructed by hand.</p>
+          </div>
+          <div class="case-side">
+            <span>COMMUNICATION</span><span>PROJECT OPS</span><span>AUTOMATION</span><span>ADMIN</span>
+          </div>
+        </article>
+
+        <p class="proof-note">No invented ROI claims. Measurable before/after results get added only when the source data is solid.</p>
+      </div>
+    </section>
+
+    <section class="section wrap" id="audit">
+      <div class="section-label">03 / START HERE</div>
+      <div class="section-body">
+        <div class="audit">
+          <div>
+            <p class="eyebrow">AI OPERATIONS AUDIT</p>
+            <h2>Find the work worth fixing.</h2>
+            <p>You do not need to know what to automate. Bring the recurring headaches.</p>
+          </div>
+          <div class="price-block">
+            <div class="price">$650</div>
+            <span>ONE-TIME ENGAGEMENT</span>
+          </div>
+          <ul>
+            <li>60–90 minute discovery session</li>
+            <li>Review of current workflow and friction</li>
+            <li>3–5 prioritized AI / automation opportunities</li>
+            <li>Human roles, dependencies, and expected impact</li>
+            <li>Recommended next step and what to measure</li>
+          </ul>
+          <div class="audit-end">
+            <p>The audit fee may be credited toward an approved implementation project. Implementation is scoped separately.</p>
+            <a class="button primary" href="mailto:paulallenhagler@gmail.com?subject=AI%20Operations%20Audit">TALK TO PAUL →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="about">
+      <div class="section-label">04 / ABOUT</div>
+      <div class="section-body about-grid">
+        <div>
+          <h2>Operator first.</h2>
+          <p class="intro">I’m Paul Hagler. My background is in operations, customer relationships, auctions, liquidation, sales, and catering. I use AI because it is useful—not because every problem needs it.</p>
+        </div>
+        <div class="about-side">
+          <p>The advantage is practical context. I know what it feels like when customer information lives in six places, when a report has to be rebuilt manually, or when one missing handoff creates three more problems.</p>
+          <p>That is the level I build for: useful systems that fit the business people are already running.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact wrap" id="contact">
+      <p class="eyebrow">05 / CONTACT</p>
+      <h2>What keeps landing<br>back on your plate?</h2>
+      <p>Tell me what your business does, what tools you use, and what you keep having to do manually.</p>
+      <a class="email" href="mailto:paulallenhagler@gmail.com?subject=AI%20Consulting%20Inquiry">paulallenhagler@gmail.com ↗</a>
+      <div class="location">KANSAS CITY, MISSOURI · REMOTE</div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 PAUL HAGLER</span>
+    <span>AI SYSTEMS · AUTOMATION · OPERATIONS</span>
+  </footer>
+</body>
+</html>
