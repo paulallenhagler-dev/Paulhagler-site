@@ -6,7 +6,8 @@
   <title>Kansas City AI Consulting for Small Businesses | Paul Hagler</title>
   <meta name="description" content="Kansas City AI consultant helping small businesses automate repetitive work, streamline operations, and improve reporting. Free, no-obligation 30-minute consultation. Request a conversation online.">
   <meta name="theme-color" content="#142b27">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="robots" content="index, follow, max-image-preview:large">\n  <meta name="author" content="Paul Hagler">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="https://paulhagler.com/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
@@ -156,8 +157,8 @@
       const fallback = document.getElementById('contact-fallback');
       const reveal = document.getElementById('reveal-address');
       const destination = document.getElementById('email-reveal');
-      // Address is assembled on interaction to discourage simple scraping. Not a security guarantee.
-      const inbox = () => atob('cGF1bGFsbGVuaGFnbGVyQGdtYWlsLmNvbQ==');
+      // Contact address appears only when someone requests it; no external scripts are loaded.
+      const inbox = () => ['paulallenhagler', 'gmail.com'].join('@');
       form.addEventListener('submit', function (event) {
         event.preventDefault();
         if (!form.reportValidity()) return;
