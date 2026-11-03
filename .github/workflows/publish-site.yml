@@ -1,0 +1,63 @@
+name: Publish clean website package
+
+on:
+  push:
+    paths:
+      - "index.html"
+      - "robots.txt"
+      - "sitemap.xml"
+      - ".github/workflows/publish-site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify site and rebuild deployment package
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import os, re
+          source = Path("paulhagler-site-v2.zip")
+          output = Path("site-package.tmp.zip")
+          replacements = {"index.html", "robots.txt", "sitemap.xml"}
+          index = Path("index.html").read_text(encoding="utf-8")
+          if re.search(r'(?i)(?:\\$\\s*650\\b|650\\s*\\$|\\b650\\s+(?:dollar|consultation|audit))', index):
+              raise SystemExit("A $650 offer remains in index.html")
+          with ZipFile(source, "r") as previous, ZipFile(output, "w", ZIP_DEFLATED, compresslevel=9) as clean:
+              for entry in previous.infolist():
+                  name = entry.filename.lstrip("./")
+                  if name in replacements:
+                      continue
+                  if ".." in Path(name).parts or name.startswith("/"):
+                      raise SystemExit(f"Unsafe archive path: {name}")
+                  data = previous.read(entry.filename)
+                  if Path(name).suffix.lower() in {".html", ".htm", ".js", ".json", ".xml", ".txt", ".css"}:
+                      if re.search(rb'(?i)(?:\$\s*650\b|650\s*\$|\b650\s+(?:dollar|consultation|audit))', data):
+                          raise SystemExit(f"Old $650 sales language remains in {name}")
+                  clean.writestr(entry, data)
+              for filename in sorted(replacements):
+                  clean.write(filename, filename)
+          output.replace(source)
+          with ZipFile(source) as verify:
+              assert verify.read("index.html") == Path("index.html").read_bytes()
+              assert "robots.txt" in verify.namelist()
+              assert "sitemap.xml" in verify.namelist()
+          PY
+      - name: Commit package update
+        run: |
+          if ! git diff --quiet -- paulhagler-site-v2.zip; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add paulhagler-site-v2.zip
+            git commit -m "Build clean deploy archive from verified site files"
+            git push
+          fi
